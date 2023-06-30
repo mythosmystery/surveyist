@@ -4,6 +4,7 @@ import { Header } from "@/components/server/header"
 import "../styles/globals.css"
 
 import { TrpcProvider } from "../components/client/trpc-client"
+import { Toaster } from "react-hot-toast"
 
 const font = Raleway({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
       <TrpcProvider>
         <html lang="en" className={font.className}>
           <body>
+            <Toaster />
             <Header />
             {children}
           </body>

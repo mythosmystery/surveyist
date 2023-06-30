@@ -6,12 +6,12 @@ import type { RouterInputs } from "@/utils/api"
 
 type CreateSurvey = RouterInputs["survey"]["saveSurvey"]
 
-export const SurveyBuilder = () => {
+export const SurveyBuilder = ({ data }: { data?: string }) => {
   const { mutate } = api.survey.saveSurvey.useMutation()
   const creator = new SurveyCreator()
 
   creator.text =
-    window.localStorage.getItem("survey-json") || JSON.stringify({})
+    data || window.localStorage.getItem("survey-json") || JSON.stringify({})
 
   creator.saveSurveyFunc = (
     saveNo: string,

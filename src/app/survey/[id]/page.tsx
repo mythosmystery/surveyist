@@ -1,5 +1,4 @@
 import { getMongoRepoRSC } from "@/lib/mongo/repo"
-import { omit } from "lodash"
 import { ObjectId } from "mongodb"
 import { SurveyViewer } from "@/components/client/surveyViewer"
 import "survey-core/defaultV2.min.css"
