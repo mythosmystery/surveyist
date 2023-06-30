@@ -5,16 +5,18 @@ export const Header = () => {
   const { userId } = auth()
   const isSignedIn = !!userId
   return (
-    <header className="flex items-center justify-between p-6">
-      <Link href="/" className="text-xl text-blue-500 hover:text-blue-900">
+    <header className="fixed flex w-full items-center justify-between p-6">
+      <Link href="/" className="text-xl text-pink-500 hover:text-pink-900">
         Surveyist
       </Link>
-      <UserButton afterSignOutUrl="/" />
-      {!isSignedIn && (
-        <Link href="/sign-in" className="text-blue-500 hover:text-blue-900">
-          Sign In
-        </Link>
-      )}
+      <div className="mt-9">
+        <UserButton afterSignOutUrl="/" />
+        {!isSignedIn && (
+          <Link href="/sign-in" className=" text-pink-100 hover:text-pink-300">
+            Sign In
+          </Link>
+        )}
+      </div>
     </header>
   )
 }

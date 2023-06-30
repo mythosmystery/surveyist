@@ -14,5 +14,8 @@ export default async function SurveyCreatorPage({
     const data = await survey.findOne({ _id: new ObjectId(searchParams.id) })
     return <SurveyBuilder data={JSON.stringify(data || {})} />
   }
+  if (searchParams.new) {
+    return <SurveyBuilder newSurvey />
+  }
   return <SurveyBuilder />
 }

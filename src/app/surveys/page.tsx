@@ -32,14 +32,14 @@ const SurveyCard = ({ survey }: { survey: SurveyModel }) => {
   return (
     <div>
       <Link href={`/survey/${id}`}>
-        <div className="m-4 rounded-lg px-4 py-8 text-center shadow-md hover:bg-slate-100">
+        <div className="m-4 rounded-lg px-4 py-8 text-center shadow-md hover:bg-pink-100">
           <h2>{survey.title}</h2>
           <p>{survey.description}</p>
           <p>{survey.pages.length} pages</p>
         </div>
       </Link>
       <Link href={`/creator?id=${id}`}>
-        <div className="mx-4 my-2 flex items-center gap-2 rounded-md p-3 shadow-sm shadow-sm hover:bg-yellow-200">
+        <div className="mx-4 my-2 flex items-center gap-2 rounded-md border-b p-3 hover:bg-yellow-100">
           <GoPencil />
           <p className="text-lg">Edit Survey</p>
         </div>
