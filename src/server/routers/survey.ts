@@ -49,4 +49,15 @@ export const surveyRouter = createTRPCRouter({
       )
       console.log(upsertedId)
     }),
+
+  deleteSurvey: protectedProcedure
+    .input(
+      z.object({
+        surveyId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.auth.userId
+      await ctx.survey.deleteOne({ _id: new ObjectId(input.surveyId), userId })
+    }),
 })

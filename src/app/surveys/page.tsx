@@ -2,12 +2,16 @@ import { getMongoRepoRSC } from "@/lib/mongo/repo"
 import type { SurveyModel } from "@/lib/types"
 import Link from "next/link"
 import { GoPencil } from "react-icons/go"
-import { Blobs } from "../../components/server/blobs"
+import { SurveyDeleteButton } from "../../components/client/surveyDeleteButton"
+import { cache } from "react"
+
+const getSurveys = cache(async () => {
+  const { survey } = await getMongoRepoRSC()
+  return await survey.find().toArray()
+})
 
 const SurveyPage = async () => {
-  const { survey } = await getMongoRepoRSC()
-
-  const surveys = await survey.find().toArray()
+  const surveys = await getSurveys()
 
   console.log(surveys)
 
@@ -38,12 +42,15 @@ const SurveyCard = ({ survey }: { survey: SurveyModel }) => {
           <p>{survey.pages.length} pages</p>
         </div>
       </Link>
-      <Link href={`/creator?id=${id}`}>
-        <div className="mx-4 my-2 flex items-center gap-2 rounded-md border-b bg-white p-3 hover:bg-yellow-100">
-          <GoPencil />
-          <p className="text-lg">Edit Survey</p>
-        </div>
-      </Link>
+      <div className="flex">
+        <Link href={`/creator?id=${id}`} className="grow">
+          <div className="mx-4 my-2 flex items-center gap-2 rounded-md border-b bg-white p-3 hover:bg-yellow-100">
+            <GoPencil />
+            <p className="lg:text-lg">Edit</p>
+          </div>
+        </Link>
+        <SurveyDeleteButton id={id} />
+      </div>
     </div>
   )
 }
