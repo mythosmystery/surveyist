@@ -1,7 +1,7 @@
 import { getMongoRepoRSC } from "@/lib/mongo/repo"
 import type { SurveyModel } from "@/lib/types"
 import Link from "next/link"
-import { GoPencil } from "react-icons/go"
+import { GoPencil, GoPlus } from "react-icons/go"
 import { SurveyDeleteButton } from "../../components/client/surveyDeleteButton"
 import { cache } from "react"
 
@@ -35,11 +35,17 @@ const SurveyCard = ({ survey }: { survey: SurveyModel }) => {
   const id = survey._id?.toString() || ""
   return (
     <div className="mt-12">
+      <a
+        className="fixed right-20 top-24 rounded-full bg-slate-100/75 p-2 hover:bg-pink-400/50"
+        href="/creator?new=true"
+      >
+        <GoPlus className="h-8 w-8" />
+      </a>
       <Link href={`/survey/${id}`}>
         <div className="m-4 rounded-lg bg-white px-4 py-8 text-center shadow-md hover:bg-pink-100">
           <h2>{survey.title}</h2>
           <p>{survey.description}</p>
-          <p>{survey.pages.length} pages</p>
+          <p>{survey.pages.length} page(s)</p>
         </div>
       </Link>
       <div className="flex">
