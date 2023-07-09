@@ -4,14 +4,17 @@ import Link from "next/link"
 import { GoPencil, GoPlus } from "react-icons/go"
 import { SurveyDeleteButton } from "../../components/client/surveyDeleteButton"
 import { cache } from "react"
+import { auth } from "@clerk/nextjs"
 
-const getSurveys = cache(async () => {
+const getSurveys = cache(async (userId: string) => {
   const { survey } = await getMongoRepoRSC()
-  return await survey.find().toArray()
+  return await survey.find({ userId }).toArray()
 })
 
 const SurveyPage = async () => {
-  const surveys = await getSurveys()
+  const { userId } = auth()
+  console.log(userId)
+  const surveys = await getSurveys(userId!)
 
   console.log(surveys)
 
