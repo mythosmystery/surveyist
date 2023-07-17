@@ -4,6 +4,12 @@ import { GoTrash } from "react-icons/go"
 import { api } from "../../utils/api"
 import { toast } from "react-hot-toast"
 import { useRouter } from "next/navigation"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export const SurveyDeleteButton = ({ id }: { id: string }) => {
   const router = useRouter()
@@ -18,11 +24,20 @@ export const SurveyDeleteButton = ({ id }: { id: string }) => {
   const handleClick = () => mutate({ surveyId: id })
 
   return (
-    <button
-      className="mx-4 my-2 flex items-center gap-2 rounded-md border-b bg-white px-4 py-3 hover:bg-red-100"
-      onClick={handleClick}
-    >
-      <GoTrash />
-    </button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <button
+            className="mx-4 my-2 flex items-center gap-2 rounded-md border-b bg-white p-4 hover:bg-red-100"
+            onClick={handleClick}
+          >
+            <GoTrash />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="text-red-400">Delete survey</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }

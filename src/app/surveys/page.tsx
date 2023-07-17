@@ -5,6 +5,8 @@ import { GoPencil, GoPlus } from "react-icons/go"
 import { SurveyDeleteButton } from "../../components/client/surveyDeleteButton"
 import { cache } from "react"
 import { auth } from "@clerk/nextjs"
+import { CopyButton } from "../../components/client/copyButton"
+import { env } from "../../env.mjs"
 
 const getSurveys = cache(async (userId: string) => {
   const { survey } = await getMongoRepoRSC()
@@ -19,7 +21,7 @@ const SurveyPage = async () => {
   console.log(surveys)
 
   if (!surveys.length) {
-    return <div>No surveys found</div>
+    return <NoSurveys />
   }
 
   return (
@@ -33,6 +35,21 @@ const SurveyPage = async () => {
 }
 
 export default SurveyPage
+
+const NoSurveys = () => {
+  return (
+    <div className="mt-20 flex items-center justify-center">
+      <div className="">
+        <h2 className="text-2xl font-thin">No surveys found</h2>
+        <Link href="/creator?new=true">
+          <p className="mt-8 rounded-md border-b bg-white p-3 text-center hover:bg-yellow-100">
+            Create one now!
+          </p>
+        </Link>
+      </div>
+    </div>
+  )
+}
 
 const SurveyCard = ({ survey }: { survey: SurveyModel }) => {
   const id = survey._id?.toString() || ""
@@ -51,13 +68,17 @@ const SurveyCard = ({ survey }: { survey: SurveyModel }) => {
           <p>{survey.pages.length} page(s)</p>
         </div>
       </Link>
-      <div className="flex">
+      <div className="flex items-center">
         <Link href={`/creator?id=${id}`} className="grow">
           <div className="mx-4 my-2 flex items-center gap-2 rounded-md border-b bg-white p-3 hover:bg-yellow-100">
             <GoPencil />
             <p className="lg:text-lg">Edit</p>
           </div>
         </Link>
+        <CopyButton
+          value={`${env.NEXT_PUBLIC_APP_URL}/survey/${id}`}
+          caption="Copy shareable link"
+        />
         <SurveyDeleteButton id={id} />
       </div>
     </div>
